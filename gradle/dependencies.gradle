@@ -153,6 +153,8 @@ libraries.jmock = [
 libraries.gson = "com.google.code.gson:gson:2.2.4"
 libraries.sshd = "org.apache.sshd:sshd-core:0.10.0"
 
+libraries.equinox = "org.eclipse.tycho:org.eclipse.osgi:3.10.0.v20140606-1445"
+
 allprojects {
     configurations.all {
         resolutionStrategy.eachDependency { details ->
