@@ -99,4 +99,10 @@ class DefaultBaseRepositoryFactoryTest extends Specification {
         def repo = factory.createMavenRepository()
         repo instanceof DefaultMavenArtifactRepository
     }
+
+    def createP2Repository() {
+        expect:
+        def repo = factory.createP2Repository()
+        repo instanceof DefaultP2ArtifactRepository
+    }
 }

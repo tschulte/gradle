@@ -17,10 +17,12 @@ package org.gradle.api.artifacts.dsl;
 
 import groovy.lang.Closure;
 import org.gradle.api.Action;
+import org.gradle.api.Incubating;
 import org.gradle.api.artifacts.ArtifactRepositoryContainer;
 import org.gradle.api.artifacts.repositories.FlatDirectoryArtifactRepository;
 import org.gradle.api.artifacts.repositories.IvyArtifactRepository;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.artifacts.repositories.P2ArtifactRepository;
 
 import java.util.Map;
 
@@ -230,5 +232,14 @@ public interface RepositoryHandler extends ArtifactRepositoryContainer {
      * @return The added repository.
      */
     IvyArtifactRepository ivy(Action<? super IvyArtifactRepository> action);
+
+    /**
+     * Adds and configures a P2 repository.
+     *
+     * @param action The action to use to configure the repository.
+     * @return The added repository.
+     */
+    @Incubating
+    P2ArtifactRepository p2(Action<? super P2ArtifactRepository> action);
 
 }
