@@ -15,7 +15,6 @@
  */
 package org.gradle.api.artifacts.repositories;
 
-import groovy.lang.Closure;
 import org.gradle.api.Incubating;
 
 import java.net.URI;

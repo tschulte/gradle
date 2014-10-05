@@ -19,8 +19,6 @@ import com.google.common.collect.ImmutableSet;
 import org.gradle.api.artifacts.component.ModuleComponentIdentifier;
 import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.ModuleComponentRepositoryAccess;
 import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.DescriptorParseContext;
-import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.GradlePomModuleDescriptorParser;
-import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.parser.MetaDataParser;
 import org.gradle.api.internal.artifacts.repositories.transport.RepositoryTransport;
 import org.gradle.api.internal.component.ArtifactType;
 import org.gradle.internal.Transformers;
@@ -29,10 +27,7 @@ import org.gradle.internal.component.model.*;
 import org.gradle.internal.resolve.result.BuildableArtifactSetResolveResult;
 import org.gradle.internal.resolve.result.BuildableModuleComponentMetaDataResolveResult;
 import org.gradle.internal.resolve.result.DefaultResourceAwareResolveResult;
-import org.gradle.internal.resolve.result.ResourceAwareResolveResult;
-import org.gradle.internal.resource.ExternalResourceName;
 import org.gradle.internal.resource.LocallyAvailableExternalResource;
-import org.gradle.internal.resource.ResourceNotFoundException;
 import org.gradle.internal.resource.local.FileStore;
 import org.gradle.internal.resource.local.LocallyAvailableResourceFinder;
 
@@ -40,7 +35,7 @@ import java.net.URI;
 import java.util.*;
 
 public class P2Resolver extends ExternalResourceResolver {
-    private final URI root;
+    private final URI uri;
 
     public P2Resolver(String name, URI rootUri, RepositoryTransport transport,
                          LocallyAvailableResourceFinder<ModuleComponentArtifactMetaData> locallyAvailableResourceFinder,
@@ -51,7 +46,7 @@ public class P2Resolver extends ExternalResourceResolver {
                 new ChainedVersionLister(new MavenVersionLister(transport.getRepository()), new ResourceVersionLister(transport.getRepository())),
                 locallyAvailableResourceFinder,
                 artifactFileStore);
-        this.root = rootUri;
+        this.uri = rootUri;
     }
 
     @Override
@@ -59,8 +54,8 @@ public class P2Resolver extends ExternalResourceResolver {
         return String.format("P2 repository '%s'", getName());
     }
 
-    public URI getRoot() {
-        return root;
+    public URI getUri() {
+        return uri;
     }
 
     protected void doResolveComponentMetaData(DependencyMetaData dependency, ModuleComponentIdentifier moduleComponentIdentifier, BuildableModuleComponentMetaDataResolveResult result) {

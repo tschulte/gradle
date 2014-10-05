@@ -17,7 +17,6 @@
 
 package org.gradle.api.internal.artifacts.repositories.resolver
 
-import org.gradle.api.internal.artifacts.ivyservice.ivyresolve.strategy.ResolverStrategy
 import org.gradle.api.internal.artifacts.repositories.transport.RepositoryTransport
 import org.gradle.internal.resource.local.FileStore
 import org.gradle.internal.resource.local.LocallyAvailableResourceFinder
@@ -27,7 +26,7 @@ import spock.lang.Specification
  * Created by adam on 12/09/2014.
  */
 class P2ResolverTest extends Specification {
-    def resolver = new P2Resolver("repo", Stub(RepositoryTransport), Stub(LocallyAvailableResourceFinder), false, Stub(ResolverStrategy), Stub(FileStore))
+    def resolver = new P2Resolver("repo", new URI("http://localhost"), Stub(RepositoryTransport), Stub(LocallyAvailableResourceFinder), Stub(FileStore))
 
     def "has useful string representation"() {
         expect:
