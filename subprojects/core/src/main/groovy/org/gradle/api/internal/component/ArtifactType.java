@@ -18,7 +18,7 @@ package org.gradle.api.internal.component;
 import org.gradle.util.GUtil;
 
 public enum ArtifactType {
-    SOURCES, JAVADOC, IVY_DESCRIPTOR, MAVEN_POM;
+    SOURCES, JAVADOC, IVY_DESCRIPTOR, MAVEN_POM, P2_ARTIFACTS, P2_CONTENT;
 
     public String toString() {
         return String.format("'%s' artifacts", GUtil.toWords(name()));

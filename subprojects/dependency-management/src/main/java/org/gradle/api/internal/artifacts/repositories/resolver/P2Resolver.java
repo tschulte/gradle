@@ -63,37 +63,7 @@ public class P2Resolver extends ExternalResourceResolver {
     }
 
     protected boolean isMetaDataArtifact(ArtifactType artifactType) {
-        return artifactType == ArtifactType.MAVEN_POM;
-    }
-
-    @Override
-    protected MutableModuleComponentResolveMetaData processMetaData(MutableModuleComponentResolveMetaData metaData) {
-        if (metaData.getId().getVersion().endsWith("-SNAPSHOT")) {
-            metaData.setChanging(true);
-        }
-        return metaData;
-    }
-
-    private void resolveUniqueSnapshotDependency(DependencyMetaData dependency, ModuleComponentIdentifier module, BuildableModuleComponentMetaDataResolveResult result, MavenUniqueSnapshotModuleSource snapshotSource) {
-        resolveStaticDependency(dependency, module, result, createArtifactResolver(snapshotSource));
-        if (result.getState() == BuildableModuleComponentMetaDataResolveResult.State.Resolved) {
-            result.getMetaData().setSource(snapshotSource);
-        }
-    }
-
-    private boolean isSnapshotVersion(ModuleComponentIdentifier module) {
-        return module.getVersion().endsWith("-SNAPSHOT");
-    }
-
-    @Override
-    protected ExternalResourceArtifactResolver createArtifactResolver(ModuleSource moduleSource) {
-
-        if (moduleSource instanceof MavenUniqueSnapshotModuleSource) {
-            final String timestamp = ((MavenUniqueSnapshotModuleSource) moduleSource).getTimestamp();
-            return new MavenUniqueSnapshotExternalResourceArtifactResolver(super.createArtifactResolver(moduleSource), timestamp);
-        }
-
-        return super.createArtifactResolver(moduleSource);
+        return artifactType == ArtifactType.P2_ARTIFACTS || artifactType == ArtifactType.P2_CONTENT;
     }
 
     @Override
@@ -116,7 +86,7 @@ public class P2Resolver extends ExternalResourceResolver {
 
     @Override
     protected MutableModuleComponentResolveMetaData createMetaDataForDependency(DependencyMetaData dependency) {
-        return new DefaultMavenModuleResolveMetaData(dependency);
+        return new DefaultMavenM   oduleResolveMetaData(dependency);
     }
 
     protected MutableModuleComponentResolveMetaData parseMetaDataFromResource(LocallyAvailableExternalResource cachedResource, DescriptorParseContext context) {
