@@ -118,6 +118,27 @@ abstract class AbstractIncrementalCompileIntegrationTest extends AbstractIntegra
         failure.assertHasDescription "Execution failed for task ':app:${language.compileTaskName}'."
     }
 
+    def "recompiles classes when all classes are removed"() {
+        given:
+        buildFile << """
+            apply plugin: '${language.name}'
+            ${language.compileTaskName}.options.incremental = true
+            ${language.projectGroovyDependencies()}
+        """.stripIndent()
+        file("src/main/${language.name}/IPerson.${language.name}") << basicInterface
+
+        expect:
+        succeeds 'classes'
+        file("build/classes/${language.name}/main/IPerson.class").exists()
+
+        when: "remove interface"
+        file("src/main/${language.name}/IPerson.${language.name}").delete()
+
+        then: "compile should remove class file from build dir"
+        succeeds 'classes'
+        !file("build/classes/${language.name}/main/IPerson.class").exists()
+    }
+
     def "task outcome is UP-TO-DATE when no recompilation necessary"() {
         given:
         libraryAppProjectWithIncrementalCompilation(language)
